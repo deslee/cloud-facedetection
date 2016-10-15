@@ -1,0 +1,10 @@
+{
+  "Parameters": {
+    "Parameter:FD-Lambda:CodeBucket": {
+      "Type": "String"
+    },
+    "Parameter:FD-Lambda:CodeKey": {
+      "Type": "String"
+    }
+  }
+}

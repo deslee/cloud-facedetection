@@ -1,0 +1,38 @@
+{
+  "Role:FD-Lambda": {
+    "Type": "AWS::IAM::Role",
+    "Properties": {
+      "AssumeRolePolicyDocument": {
+        "Statement": {
+          "Effect": "Allow",
+          "Action": [
+            "sts:AssumeRole"
+          ],
+          "Principal": {
+            "Service": [
+              "lambda.amazonaws.com"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "Role:FD-ApiGateway": {
+    "Type": "AWS::IAM::Role",
+    "Properties": {
+      "AssumeRolePolicyDocument": {
+        "Statement": {
+          "Effect": "Allow",
+          "Action": [
+            "sts:AssumeRole"
+          ],
+          "Principal": {
+            "Service": [
+              "apigateway.amazonaws.com"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
