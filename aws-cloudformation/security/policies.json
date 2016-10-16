@@ -1,0 +1,107 @@
+{
+  "Policy:FD-Bucket:Get": {
+    "Type": "AWS::IAM::Policy",
+    "Properties": {
+      "Roles": [
+        {
+          "Ref": "Role:FD-Lambda"
+        }
+      ],
+      "PolicyName": "FD-Bucket:Get",
+      "PolicyDocument": {
+        "Statement": [
+          {
+            "Action": [
+              "s3:GetObject"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+              {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:aws:s3:::",
+                    {
+                      "Ref": "FDBucket"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "Policy:FD-Bucket:Put": {
+    "Type": "AWS::IAM::Policy",
+    "Properties": {
+      "Roles": [
+        {
+          "Ref": "Role:FD-ApiGateway"
+        }
+      ],
+      "PolicyName": "FD-Bucket:Put",
+      "PolicyDocument": {
+        "Statement": [
+          {
+            "Action": [
+              "s3:PutObject"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+              {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:aws:s3:::",
+                    {
+                      "Ref": "FDBucket"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "Policy:FD-Bucket:Delete": {
+    "Type": "AWS::IAM::Policy",
+    "Properties": {
+      "Roles": [
+        {
+          "Ref": "Role:FD-Lambda"
+        }
+      ],
+      "PolicyName": "FD-Bucket:Delete",
+      "PolicyDocument": {
+        "Statement": [
+          {
+            "Action": [
+              "s3:DeleteObject"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+              {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:aws:s3:::",
+                    {
+                      "Ref": "FDBucket"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
