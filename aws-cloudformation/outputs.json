@@ -1,0 +1,6 @@
+{
+    "BucketName" : {
+        "Value" : { "Ref" : "FDBucket" },
+        "Description" : "FaceDetection bucket name"
+    }
+}

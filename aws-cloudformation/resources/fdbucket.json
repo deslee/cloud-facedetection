@@ -2,5 +2,21 @@
   "FDBucket": {
       "Type": "AWS::S3::Bucket",
       "Properties": {}
+  },
+  "FDBucketPolicy": {
+    "Type": "AWS::S3::BucketPolicy",
+    "Properties": {
+      "Bucket": {"Ref": "FDBucket" },
+      "PolicyDocument": {
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:PutObject",
+	          "Resource": { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "FDBucket" } , "/*" ]]}
+          }
+        ]
+      }
+    }
   }
 }

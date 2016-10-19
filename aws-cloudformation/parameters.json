@@ -1,10 +1,10 @@
 {
-  "Parameters": {
-    "Parameter:FD-Lambda:CodeBucket": {
-      "Type": "String"
-    },
-    "Parameter:FD-Lambda:CodeKey": {
-      "Type": "String"
-    }
+  "ParameterFDLambdaCodeBucket": {
+    "Type": "String",
+    "Description": "The S3 Bucket where the source code for the face detection lambda function is stored"
+  },
+  "ParameterFDLambdaCodeKey": {
+    "Type": "String",
+    "Description": "The S3 Key where the source code for the face detection lambda function is stored"
   }
 }

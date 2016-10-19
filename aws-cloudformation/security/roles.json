@@ -1,5 +1,5 @@
 {
-  "Role:FD-Lambda": {
+  "RoleFDLambda": {
     "Type": "AWS::IAM::Role",
     "Properties": {
       "AssumeRolePolicyDocument": {
@@ -17,7 +17,7 @@
       }
     }
   },
-  "Role:FD-ApiGateway": {
+  "RoleFDApiGateway": {
     "Type": "AWS::IAM::Role",
     "Properties": {
       "AssumeRolePolicyDocument": {

@@ -1,0 +1,87 @@
+{
+   "RestAPI":{
+      "Type":"AWS::ApiGateway::RestApi",
+      "Properties":{
+         "Name":"FD-API"
+      }
+   },
+   "RestAPIResourceFDImage":{
+      "Type":"AWS::ApiGateway::Resource",
+      "Properties":{
+         "RestApiId":{
+            "Ref":"RestAPI"
+         },
+         "ParentId":{
+            "Fn::GetAtt":[
+               "RestAPI",
+               "RootResourceId"
+            ]
+         },
+         "PathPart":"{image}"
+      },
+     "DependsOn": ["RestAPI"]
+   },
+   "RestAPIMethodGetProperties":{
+      "Type":"AWS::ApiGateway::Method",
+      "Properties":{
+         "AuthorizationType":"NONE",
+         "ResourceId":{
+            "Ref":"RestAPIResourceFDImage"
+         },
+         "HttpMethod":"GET",
+         "Integration":{
+            "Type":"AWS",
+            "Credentials": {
+                "Fn::GetAtt": [
+                    "RoleFDApiGateway",
+                    "Arn"
+                ]
+            },
+            "IntegrationHttpMethod":"POST",
+            "PassthroughBehavior": "NEVER",
+            "Uri":{
+               "Fn::Join":[
+                  "",
+                  [
+                     "arn:aws:apigateway:",
+                     {
+                        "Ref":"AWS::Region"
+                     },
+                     ":lambda:path/2015-03-31/functions/",
+                     {
+                        "Fn::GetAtt":[
+                           "FunctionFDLambda",
+                           "Arn"
+                        ]
+                     },
+                     "/invocations"
+                  ]
+               ]
+            },
+            "RequestTemplates": {
+                "application/json": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            "{ \"key\": \"$input.params('image')\", \"bucket\": \"",
+                            {
+                                "Ref": "FDBucket"
+                            },
+                            "\" }"
+                        ]
+                    ]
+                }
+            }
+         }
+        },
+        "DependsOn": ["RestAPIResourceFDImage"]
+   },
+   "ReatAPIDeploymentFD": {
+        "Type": "AWS::ApiGateway::Deployment",
+        "Properties": {
+            "RestApiId": {"Ref": "RestAPI"},
+            "StageName": "v1"
+        },
+        "DependsOn": ["RestAPIMethodGetProperties"]
+    }
+}

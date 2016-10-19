@@ -1,13 +1,13 @@
 {
-  "Policy:FD-Bucket:Get": {
+  "PolicyFDBucketGet": {
     "Type": "AWS::IAM::Policy",
     "Properties": {
       "Roles": [
         {
-          "Ref": "Role:FD-Lambda"
+          "Ref": "RoleFDLambda"
         }
       ],
-      "PolicyName": "FD-Bucket:Get",
+      "PolicyName": "FDBucketGet",
       "PolicyDocument": {
         "Statement": [
           {
@@ -34,20 +34,20 @@
       }
     }
   },
-  "Policy:FD-Bucket:Put": {
+  "PolicyFDBucketDelete": {
     "Type": "AWS::IAM::Policy",
     "Properties": {
       "Roles": [
         {
-          "Ref": "Role:FD-ApiGateway"
+          "Ref": "RoleFDLambda"
         }
       ],
-      "PolicyName": "FD-Bucket:Put",
+      "PolicyName": "FDBucketDelete",
       "PolicyDocument": {
         "Statement": [
           {
             "Action": [
-              "s3:PutObject"
+              "s3:DeleteObject"
             ],
             "Effect": "Allow",
             "Resource": [
@@ -69,33 +69,27 @@
       }
     }
   },
-  "Policy:FD-Bucket:Delete": {
+  "PolicyFDLambdaExecute": {
     "Type": "AWS::IAM::Policy",
     "Properties": {
       "Roles": [
         {
-          "Ref": "Role:FD-Lambda"
+          "Ref": "RoleFDApiGateway"
         }
       ],
-      "PolicyName": "FD-Bucket:Delete",
+      "PolicyName": "FDLambdaExecute",
       "PolicyDocument": {
         "Statement": [
           {
             "Action": [
-              "s3:DeleteObject"
+              "lambda:Invoke"
             ],
             "Effect": "Allow",
             "Resource": [
               {
-                "Fn::Join": [
-                  "",
-                  [
-                    "arn:aws:s3:::",
-                    {
-                      "Ref": "FDBucket"
-                    },
-                    "/*"
-                  ]
+                "Fn::GetAtt":[
+                    "FunctionFDLambda",
+                    "Arn"
                 ]
               }
             ]

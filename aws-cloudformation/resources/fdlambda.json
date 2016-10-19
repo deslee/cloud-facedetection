@@ -1,11 +1,11 @@
 {
-  "Function:FD-Lambda": {
+  "FunctionFDLambda": {
     "Type": "AWS::Lambda::Function",
     "Properties": {
       "Handler": "index.handler",
       "Role": {
         "Fn::GetAtt": [
-          "Role:FD-Lambda",
+          "RoleFDLambda",
           "Arn"
         ]
       },
@@ -13,10 +13,10 @@
       "Runtime": "nodejs4.3",
       "Code": {
         "S3Bucket": {
-          "Ref": "Parameter:FD-Lambda:CodeBucket"
+          "Ref": "ParameterFDLambdaCodeBucket"
         },
         "S3Key": {
-          "Ref": "Parameter:FD-Lambda:CodeKey"
+          "Ref": "ParameterFDLambdaCodeKey"
         }
       }
     }
