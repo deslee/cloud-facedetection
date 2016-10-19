@@ -1,0 +1,11 @@
+{
+  "name": "aws-cloudformation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "compile.js",
+  "scripts": {
+    "compile": "node compile.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
