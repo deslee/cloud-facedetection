@@ -1,0 +1,76 @@
+
+
+  <form id="form" action="http://facedetection-fdbucket-qdrphx6voztu.s3.amazonaws.com/" method="post" enctype="multipart/form-data">
+    <input type="hidden"  name="key" value="" />
+    <input type="hidden" name="acl" value="public-read" />
+    <input type="file" name="file" /> <br />
+    <!-- The elements after this will be ignored -->
+    <input type="submit" name="submit" value="Upload to Amazon S3" />
+  </form>
+  
+<script>
+    var form = document.getElementById("form")
+
+    function guid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0,
+            v = c == 'x' ? r : r & 0x3 | 0x8;
+            return v.toString(16);
+        });
+    }
+    
+    form.onsubmit = function(e) {
+        e.preventDefault();
+        var formdata = new FormData(form)
+
+
+        formdata.set('Content-Type', formdata.get('file').type)
+        var key = guid() + '-' + formdata.get('file').name
+        formdata.set('key', key)
+        
+        var request = new XMLHttpRequest();
+        var handler = uploadResult.bind(null, request, key);
+        request.open('POST', form.action, true);
+
+        request.onload = handler
+        request.onerror = handler
+        
+        request.send(formdata);
+    }
+
+    function uploadResult(request, key) {
+        if (request.status >= 200 && request.status < 400) {
+            // Success!
+            var url = "https://wamdto2lvh.execute-api.us-east-1.amazonaws.com/v1/" + key
+        
+            var request = new XMLHttpRequest();
+            var handler = apiResponse.bind(null, request);
+            request.open('GET', url, true);
+
+            request.onload = handler
+            request.onerror = handler
+
+            request.send()
+        } else {
+           console.log("error" + request.status)
+        }
+    }
+
+    function apiResponse(request) {
+        if (request.status >= 200 && request.status < 400) {
+            
+            var data;
+            try {
+                data = JSON.parse(request.responseText);
+            } catch (e) {
+                return false;
+            }
+
+            console.log(data)
+        } else {
+           console.log("error" + request.status)
+        }
+    }
+
+
+</script>

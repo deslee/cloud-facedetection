@@ -16,7 +16,24 @@
 	          "Resource": { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "FDBucket" } , "/*" ]]}
           }
         ]
+      },
+      "CorsConfiguration": {
+        "CorsRules": [
+          {
+            "AllowedMethods" : ["GET", "POST"],
+            "AllowedOrigins" : ["*"],
+            "MaxAge": 3000
+          }
+        ]
       }
     }
   }
 }
+
+
+<CORSConfiguration>
+  <CORSRule>
+    <AllowedOrigin>*</AllowedOrigin>
+    <AllowedMethod>GET</AllowedMethod>
+  </CORSRule>
+</CORSConfiguration>
